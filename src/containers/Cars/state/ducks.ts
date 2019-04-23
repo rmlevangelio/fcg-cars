@@ -6,6 +6,7 @@ const initialState: IState = {
   data: {
     tasks: [],
     makeOptions: [],
+    car: null,
   },
   meta: {
     isLoading: false,

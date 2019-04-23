@@ -3,6 +3,7 @@ import { ITask } from "../components/Task/interfaces";
 export interface IPublicProps {
   tasks: ITask[];
   makeOptions: String[];
+  car: any;
 }
 
 export interface IStateMeta {

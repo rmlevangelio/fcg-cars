@@ -19,7 +19,7 @@ export function initStore() {
       reducers,
       compose(
         applyMiddleware(sagaMiddleware),
-        window.devToolsExtension() ? window.devToolsExtension() : null,
+        window['devToolsExtension'] ? window['devToolsExtension']() : (f: any) => f
       )
     ),
     runSaga: sagaMiddleware.run

@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { Query } from 'react-apollo';
+import { Query, graphql, compose } from 'react-apollo';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Field, reduxForm } from 'redux-form';
 
 import { FETCH_MODEL_OPTIONS, FETCH_MAKE_OPTIONS, FETCH_TRIM_OPTIONS } from '../queries';
+import { UPDATE_CAR } from '../mutations';
+import { CarDetailsFormPropsWithForm } from './interfaces';
 
-class CarDetailsForm extends React.PureComponent {
+class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
   state = {
     make: [],
     model: [],
@@ -14,10 +16,11 @@ class CarDetailsForm extends React.PureComponent {
   }
 
   render() {
-    const { make, model } = this.state;
-
+    const { handleSubmit, submitting } = this.props;
+    const { make, model, trim } = this.state;
+    const isSubmitDisabled = (make.length === 0 || model.length === 0 || trim.length === 0);
     return (
-      <Form>
+      <Form onSubmit={handleSubmit(this.onSubmit)}>
         <Form.Group>
           <Form.Label>Make:</Form.Label>
           <Query query={FETCH_MAKE_OPTIONS}>
@@ -28,14 +31,19 @@ class CarDetailsForm extends React.PureComponent {
                 }
 
                 return (
-                  <Form.Control as='select' onChange={this.handleMakeChange}>
-                    <option value='none'>Please select maker</option>
+                  <Field
+                    name='make'
+                    component='select'
+                    className='form-control'
+                    onChange={this.handleMakeChange}
+                  >
+                    <option value=''>Please select maker</option>
                     { 
                       data.make.map((value: any) => (
-                        <option value={value}>{ value }</option>
+                        <option key={value} value={value}>{ value }</option>
                       ))
                     }
-                  </Form.Control>
+                  </Field>
                 );
               }
             }
@@ -54,14 +62,19 @@ class CarDetailsForm extends React.PureComponent {
                   }
 
                   return (
-                    <Form.Control as='select' onChange={this.handleModelChange}>
-                      <option value='none'>Please select model</option>
+                    <Field
+                      name='model'
+                      component='select'
+                      className='form-control'
+                      onChange={this.handleModelChange}
+                    >
+                      <option value=''>Please select model</option>
                       { 
                         data.model.map((value: any) => (
-                          <option value={value}>{ value }</option>
+                          <option key={value} value={value}>{ value }</option>
                         ))
                       }
-                    </Form.Control>
+                    </Field>
                   );
                 }
               }
@@ -81,14 +94,19 @@ class CarDetailsForm extends React.PureComponent {
                   }
 
                   return (
-                    <Form.Control as='select'>
-                      <option value='none'>Please select trim</option>
+                    <Field
+                      name='trim'
+                      component='select'
+                      className='form-control'
+                      onChange={this.handleTrimChange}
+                    >
+                      <option value=''>Please select trim</option>
                       { 
                         data.trim.map((value: any) => (
-                          <option value={value}>{ value }</option>
+                          <option key={value} value={value}>{ value }</option>
                         ))
                       }
-                    </Form.Control>
+                    </Field>
                   );
                 }
               }
@@ -96,11 +114,27 @@ class CarDetailsForm extends React.PureComponent {
           </Form.Group>
         }
 
-        <Button variant='primary' type='submit'>
-          Submit
+        <Button variant='primary' type='submit' disabled={isSubmitDisabled}>
+          { submitting ? 'Submitting...' : 'Submit'}
         </Button>
       </Form>
     );
+  }
+  
+  onSubmit = (values) => {
+    // Update redux state here
+
+    // Update graphql mutation
+    return this.props.updateCar({
+      variables: {
+        car: {
+          id: this.props.carId,
+          make: values.make,
+          model: values.model,
+          trim: values.trim
+        },
+      }
+    });
   }
 
   handleMakeChange = (e) => {
@@ -109,7 +143,15 @@ class CarDetailsForm extends React.PureComponent {
 
   handleModelChange = (e) => {
     this.setState({ model: e.target.value });
-  } 
+  }
+
+  handleTrimChange = (e) => {
+    this.setState({ trim: e.target.value });
+  }
 }
 
-export default connect(null, null)(CarDetailsForm);
+export default compose(
+  graphql(UPDATE_CAR, { name: 'updateCar' }),
+  reduxForm({
+    form: 'CarDetailsForm'
+  }))(CarDetailsForm)

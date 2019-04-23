@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { Query } from 'react-apollo';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-import { addTask, toggleTask, fetchTasks } from '../../containers/Cars/state/ducks';
+import AddTaskModal from './Modal/AddTask';
 import { FETCH_TASKS } from '../../containers/Cars/queries';
-import { AddTaskModal } from './Modal/AddTask';
 import { ITask, ITaskList } from './interfaces';
 
 import './List.css';
@@ -35,7 +33,7 @@ class TasksList extends React.PureComponent<ITaskList> {
                 <ListGroup variant="flush">
                   {
                     data.tasks.map((task: ITask) => (
-                      <ListGroup.Item key={`task_${task.id}`}>
+                      <ListGroup.Item key={task.id}>
                         <span>{task.comment}</span>
                         <input id={task.id} type='checkbox' checked={task.completed} onChange={this.handleChange} />
                       </ListGroup.Item>
@@ -47,6 +45,7 @@ class TasksList extends React.PureComponent<ITaskList> {
           }
         </Query>
         <Button className='addTaskButton' variant='primary' onClick={this.handleShowModal}>+ Add new task</Button>
+
         <AddTaskModal
           carId={carId}
           show={this.state.show}
@@ -72,4 +71,4 @@ class TasksList extends React.PureComponent<ITaskList> {
   }
 }
 
-export default connect(null, null)(TasksList);
+export default TasksList;

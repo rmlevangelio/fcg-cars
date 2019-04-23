@@ -1,49 +1,73 @@
 import * as React from 'react';
+import { Field, reduxForm } from 'redux-form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { graphql, compose } from 'react-apollo';
 
-interface IAddTaskModal {
-  show: boolean;
-  carId: string;
-  handleClose: () => void;
-}
+import { CREATE_TASK } from '../../../containers/Cars/mutations';
+import { AddTaskPropsWithForm } from './interfaces';
 
-export class AddTaskModal extends React.PureComponent<IAddTaskModal> {
+class AddTaskModal extends React.PureComponent<AddTaskPropsWithForm> {
   render() {
-    const { handleClose, show } = this.props;
+    const { handleClose, show, handleSubmit } = this.props;
     return (
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add new task</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          
-          <Form>
+        <form onSubmit={handleSubmit(this.onSubmit)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add new task</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <Form.Group>
               <Form.Label>Type:</Form.Label>
-              <Form.Control as='select' name='taskType'>
-                <option value='none'>Please select task type</option>
-                <option value='addDocument'>Add Document</option>
-                <option value='washCar'>Wash Car</option>
-                <option value='addPaymentDetails'>Add Payment Details</option>
-              </Form.Control>
+              <Field
+                name='taskType'
+                component='select'
+                className='form-control'
+              >
+                <option value=''>Please select task type</option>
+                <option value='ADD_DOCUMENT'>Add Document</option>
+                <option value='WASH_CAR'>Wash Car</option>
+                <option value='ADD_PAYMENT_METHOD'>Add Payment Details</option>
+              </Field>
             </Form.Group>
             <Form.Group>
               <Form.Label>Comment:</Form.Label>
-              <Form.Control as='textarea' rows='3' name='taskComment'/>
+              <Field name='taskComment' component='textarea' rows='3' className='form-control'/>
             </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant='secondary' onClick={handleClose}>
+              Close
+            </Button>
+            <Button type='submit' variant='primary' onClick={handleClose}>
+              Save
+            </Button>
+          </Modal.Footer>
+        </form>
       </Modal>
     );
   }
+
+  onSubmit = (values) => {
+    // Update redux state here
+
+    // Update graphql mutation
+    return this.props.createTask({
+      variables: {
+        carId: this.props.carId,
+        task: {
+          taskType: values.taskType,
+          comment: values.taskComment
+        }
+      }
+    });
+  }
 }
+
+export default compose(
+  graphql(CREATE_TASK, { name: 'createTask' }),
+  reduxForm({
+    form: 'addTaskForm'
+  })
+)(AddTaskModal);
