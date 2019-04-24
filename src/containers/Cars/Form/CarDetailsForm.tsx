@@ -19,6 +19,7 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
     const { handleSubmit, submitting } = this.props;
     const { make, model, trim } = this.state;
     const isSubmitDisabled = (make.length === 0 || model.length === 0 || trim.length === 0);
+
     return (
       <Form onSubmit={handleSubmit(this.onSubmit)}>
         <Form.Group>
@@ -122,9 +123,6 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
   }
   
   onSubmit = (values) => {
-    // Update redux state here
-
-    // Update graphql mutation
     return this.props.updateCar({
       variables: {
         car: {
@@ -134,6 +132,10 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
           trim: values.trim
         },
       }
+    }).then(({ data }) => {
+      this.props.refetch();
+    }).catch((error) => {
+      console.log(error);
     });
   }
 

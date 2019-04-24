@@ -19,5 +19,6 @@ export interface ICar {
 
 export interface ICars {
   car: ICar;
+  refetch: () => void;
   isLoading: boolean;
 }

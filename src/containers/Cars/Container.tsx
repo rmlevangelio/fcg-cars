@@ -15,7 +15,7 @@ import { ICars } from './interfaces';
 
 class Cars extends React.PureComponent<ICars> {
   render() {
-    const { isLoading, car } = this.props;
+    const { isLoading, car, refetch } = this.props;
 
     return (
       <Container>
@@ -30,7 +30,7 @@ class Cars extends React.PureComponent<ICars> {
             <Card>
               <Card.Body>
                 <Card.Title>Add more information:</Card.Title>
-                <CarDetailsForm carId={CAR_ID} />
+                <CarDetailsForm carId={CAR_ID} refetch={refetch} />
               </Card.Body>
             </Card>
             <Card>
@@ -58,10 +58,11 @@ const mapGraphQLToVariables = (props) => {
 
 const mapGraphQLToProps = (props) => {
   const data = props!.data!
-  const { car, loading } = data;
+  const { car, loading, refetch } = data;
 
   return {
     car,
+    refetch,
     isLoading: loading
   }
 }
