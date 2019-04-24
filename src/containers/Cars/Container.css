@@ -1,3 +1,7 @@
-.spaceBottom {
-  margin-bottom: 10px;
+.spinnerContainer {
+  padding: 20px;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -23,6 +23,58 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
     return (
       <Form onSubmit={handleSubmit(this.onSubmit)}>
         <Form.Group>
+          <Form.Label>Physical Status:</Form.Label>
+          <Field
+            name='physicalStatus'
+            component='select'
+            className='form-control'
+          >
+            <option value='AT_OWNER'>At owner</option>
+            <option value='AT_BUYER'>At buyer</option>
+            <option value='AT_OUR_LOCATION'>At our location</option>
+          </Field>
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Legal Status:</Form.Label>
+          <Field
+            name='legalStatus'
+            component='select'
+            className='form-control'
+          >
+            <option value='OWNER'>Owner</option>
+            <option value='US'>Us</option>
+            <option value='BUYER'>Buyer</option>
+          </Field>
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Selling Status:</Form.Label>
+          <Field
+            name='sellingStatus'
+            component='select'
+            className='form-control'
+          >
+            <option value='AVAILABLE'>Available</option>
+            <option value='PENDING'>Pending</option>
+            <option value='SOLD'>Sold</option>
+            <option value='RESERVED'>Reserved</option>
+          </Field>
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Engine Type:</Form.Label>
+          <Field
+            name='engineType'
+            component='select'
+            className='form-control'
+          >
+            <option>At buyer</option>
+          </Field>
+        </Form.Group>
+
+
+        <Form.Group>
           <Form.Label>Make:</Form.Label>
           <Query query={FETCH_MAKE_OPTIONS}>
             {

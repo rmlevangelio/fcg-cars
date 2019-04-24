@@ -10,8 +10,9 @@ import { CarInfo } from '../../components/Car/info';
 import CarDetailsForm from './Form/CarDetailsForm';
 import { CAR_ID } from './constants';
 import { FETCH_CAR_DETAILS } from './queries';
-
 import { ICars } from './interfaces';
+
+import './Container.css';
 
 class Cars extends React.PureComponent<ICars> {
   render() {
@@ -20,9 +21,14 @@ class Cars extends React.PureComponent<ICars> {
     return (
       <Container>
         {
-          isLoading ?
-            <Spinner animation='grow' /> :
-            <CarInfo car={car} />
+          isLoading 
+            ?
+              <div className='spinnerContainer'>
+                <Spinner animation='grow' />
+                <div className='spinnerText'>Fetching car information...</div>
+              </div>
+            :
+              <CarInfo car={car} />
         }
 
         <div className='subInfo'>

@@ -8,6 +8,8 @@ import { DateFormatter } from '../../utils/formatter/DateFormatter';
 import { CurrencyFormatter } from '../../utils/formatter/CurrencyFormatter';
 import { PercentageFormatter } from '../../utils/formatter/PercentageFormatter';
 
+import './info.css';
+
 interface ICarInfo {
   car: ICar;
 }
@@ -45,30 +47,6 @@ export class CarInfo extends React.PureComponent<ICarInfo> {
                 <br/>
                 <small>{ PercentageFormatter(sellingDonePercentage) } payments from seller done</small>
               </Card.Text>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Card.Title>Status</Card.Title>
-              <Card.Subtitle className='mb-2 text-muted'>Physical Status:</Card.Subtitle>
-              <Form.Group>
-                <Form.Control as="select">
-                  <option>At buyer</option>
-                </Form.Control>
-              </Form.Group>
-              <Card.Subtitle className='mb-2 text-muted'>Legal Status:</Card.Subtitle>
-              <Form.Group>
-                <Form.Control as="select">
-                  <option>Buyer</option>
-                </Form.Control>
-              </Form.Group>
-              <Card.Subtitle className='mb-2 text-muted'>Seller Status:</Card.Subtitle>
-              <Form.Group>
-                <Form.Control as="select" className='spaceBottom'>
-                  <option>Sold</option>
-                </Form.Control>
-              </Form.Group>
-              <br/>
             </Card.Body>
           </Card>
         </CardDeck>
