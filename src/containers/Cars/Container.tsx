@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Spinner from 'react-bootstrap/Spinner';
 
-import TasksList from '../../components/Task/List';
+import TasksList from '../../components/Task/List/List';
 import { CarInfo } from '../../components/Car/info';
 import CarDetailsForm from './Form/CarDetailsForm';
 import { CAR_ID } from './constants';

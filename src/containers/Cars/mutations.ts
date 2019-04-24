@@ -6,6 +6,17 @@ export const CREATE_TASK = gql`
   }
 `;
 
+export const UPDATE_TASK = gql`
+  mutation updateSelectedTask($taskId: ID!, $completed: Boolean!) {
+    updateTask(id: $taskId, completed: $completed) {
+      id,
+      taskType,
+      comment,
+      completed
+    }
+  }
+`;
+
 export const UPDATE_CAR = gql`
   mutation updateCar($car: CarInput) {
     updateCar(car: $car) {

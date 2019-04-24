@@ -28,7 +28,7 @@ class AddTaskModal extends React.PureComponent<AddTaskPropsWithForm> {
                 <option value=''>Please select task type</option>
                 <option value='ADD_DOCUMENT'>Add Document</option>
                 <option value='WASH_CAR'>Wash Car</option>
-                <option value='ADD_PAYMENT_METHOD'>Add Payment Details</option>
+                <option value='ADD_PAYMENT_DETAILS'>Add Payment Details</option>
               </Field>
             </Form.Group>
             <Form.Group>
@@ -50,9 +50,6 @@ class AddTaskModal extends React.PureComponent<AddTaskPropsWithForm> {
   }
 
   onSubmit = (values) => {
-    // Update redux state here
-
-    // Update graphql mutation
     return this.props.createTask({
       variables: {
         carId: this.props.carId,
@@ -61,6 +58,10 @@ class AddTaskModal extends React.PureComponent<AddTaskPropsWithForm> {
           comment: values.taskComment
         }
       }
+    }).then(({ data }) => {
+      this.props.refetch();
+    }).catch((error) => {
+      console.log(error);
     });
   }
 }

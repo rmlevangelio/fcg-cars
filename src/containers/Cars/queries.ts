@@ -46,6 +46,7 @@ export const FETCH_TRIM_OPTIONS = gql`
 export const FETCH_TASKS = gql`
   query fetchTasks($carId: ID!) {
     tasks(carId: $carId) {
+      id,
       taskType,
       comment,
       completed

@@ -1,4 +1,4 @@
-import { ITask } from '../../../components/Task/interfaces';
+import { ITask } from '../../../components/Task/List/interfaces';
 import { IState } from '../../../state/interfaces';
 
 

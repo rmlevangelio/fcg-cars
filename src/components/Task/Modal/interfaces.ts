@@ -21,7 +21,6 @@ export type AddTaskProps =
   & IAddTaskPublicProps
   ;
 
-
 export type AddTaskPropsWithForm =
   & IAddTaskPublicProps
   & InjectedFormProps<IAddTaskFormValues, AddTaskProps>

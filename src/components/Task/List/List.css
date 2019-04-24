@@ -1,0 +1,13 @@
+.addTaskButton {
+  margin-top: 20px;
+}
+
+.taskItem {
+  padding: 10px 0 !important;
+}
+
+.taskCheckbox {
+  position: relative;
+  top: -2px;
+  margin-right: 10px;
+}
