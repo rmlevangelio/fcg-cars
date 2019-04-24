@@ -30,6 +30,7 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
             component='select'
             className='form-control'
           >
+            <option value=''>Please select</option>
             { this.renderOptions(PHYSICAL_STATUS) }
           </Field>
         </Form.Group>
@@ -41,6 +42,7 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
             component='select'
             className='form-control'
           >
+            <option value=''>Please select</option>
             { this.renderOptions(LEGAL_STATUS) }
           </Field>
         </Form.Group>
@@ -52,6 +54,7 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
             component='select'
             className='form-control'
           >
+            <option value=''>Please select</option>
             { this.renderOptions(SELLING_STATUS) }
           </Field>
         </Form.Group>
@@ -63,6 +66,7 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
             component='select'
             className='form-control'
           >
+            <option value=''>Please select</option>
             { this.renderOptions(ENGINE_TYPE) }
           </Field>
         </Form.Group>
