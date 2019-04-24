@@ -22,7 +22,7 @@ class TasksList extends React.PureComponent<ITaskList> {
       <div className='taskList'>
         { loading ? <div>Loading tasks...</div> : null }
         { !tasks ? <div>{`No tasks found.`}</div> : (
-          <ListGroup variant="flush">
+          <ListGroup variant='flush'>
             {
               tasks.map((task: ITask) => (
                 <ListGroup.Item key={task.id} className='taskItem'>

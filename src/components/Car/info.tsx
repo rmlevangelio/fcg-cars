@@ -7,6 +7,7 @@ import { ICar } from '../../containers/Cars/interfaces';
 import { DateFormatter } from '../../utils/formatter/DateFormatter';
 import { CurrencyFormatter } from '../../utils/formatter/CurrencyFormatter';
 import { PercentageFormatter } from '../../utils/formatter/PercentageFormatter';
+import { PHYSICAL_STATUS, SELLING_STATUS, LEGAL_STATUS, ENGINE_TYPE } from '../../containers/Cars/enums';
 
 import './info.css';
 
@@ -47,6 +48,39 @@ export class CarInfo extends React.PureComponent<ICarInfo> {
                 <br/>
                 <small>{ PercentageFormatter(sellingDonePercentage) } payments from seller done</small>
               </Card.Text>
+
+              { car.physicalStatus ? (
+                  <div className='infoSection'>
+                    <Card.Subtitle className='mb-2 text-muted'>Physical status:</Card.Subtitle>
+                    <Card.Text>{ PHYSICAL_STATUS[car.physicalStatus] }</Card.Text>
+                  </div>
+                ) : null
+              }
+
+              { car.legalStatus ? (
+                  <div className='infoSection'>
+                    <Card.Subtitle className='mb-2 text-muted'>Legal Status:</Card.Subtitle>
+                    <Card.Text>{ LEGAL_STATUS[car.legalStatus] }</Card.Text>
+                  </div>
+                ) : null
+              }
+
+              { car.sellingStatus ? (
+                  <div className='infoSection'>
+                    <Card.Subtitle className='mb-2 text-muted'>Selling Status:</Card.Subtitle>
+                    <Card.Text>{ SELLING_STATUS[car.sellingStatus] }</Card.Text>
+                  </div>
+                ) : null
+              }
+
+              { car.engineType ? (
+                  <div className='infoSection'>
+                    <Card.Subtitle className='mb-2 text-muted'>Engine type:</Card.Subtitle>
+                    <Card.Text>{ ENGINE_TYPE[car.engineType] }</Card.Text>
+                  </div>
+                ) : null
+              }
+              
             </Card.Body>
           </Card>
         </CardDeck>

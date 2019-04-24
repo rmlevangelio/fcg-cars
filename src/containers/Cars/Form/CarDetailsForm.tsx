@@ -7,6 +7,7 @@ import { Field, reduxForm } from 'redux-form';
 import { FETCH_MODEL_OPTIONS, FETCH_MAKE_OPTIONS, FETCH_TRIM_OPTIONS } from '../queries';
 import { UPDATE_CAR } from '../mutations';
 import { CarDetailsFormPropsWithForm } from './interfaces';
+import { PHYSICAL_STATUS, SELLING_STATUS, LEGAL_STATUS, ENGINE_TYPE } from '../enums';
 
 class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
   state = {
@@ -29,9 +30,7 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
             component='select'
             className='form-control'
           >
-            <option value='AT_OWNER'>At owner</option>
-            <option value='AT_BUYER'>At buyer</option>
-            <option value='AT_OUR_LOCATION'>At our location</option>
+            { this.renderOptions(PHYSICAL_STATUS) }
           </Field>
         </Form.Group>
 
@@ -42,9 +41,7 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
             component='select'
             className='form-control'
           >
-            <option value='OWNER'>Owner</option>
-            <option value='US'>Us</option>
-            <option value='BUYER'>Buyer</option>
+            { this.renderOptions(LEGAL_STATUS) }
           </Field>
         </Form.Group>
 
@@ -55,10 +52,7 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
             component='select'
             className='form-control'
           >
-            <option value='AVAILABLE'>Available</option>
-            <option value='PENDING'>Pending</option>
-            <option value='SOLD'>Sold</option>
-            <option value='RESERVED'>Reserved</option>
+            { this.renderOptions(SELLING_STATUS) }
           </Field>
         </Form.Group>
 
@@ -69,7 +63,7 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
             component='select'
             className='form-control'
           >
-            <option>At buyer</option>
+            { this.renderOptions(ENGINE_TYPE) }
           </Field>
         </Form.Group>
 
@@ -173,15 +167,19 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
       </Form>
     );
   }
+
+  renderOptions = (field) => {
+    return Object.keys(field).map((value) => (
+      <option value={value}>{field[value]}</option>
+    ))
+  }
   
   onSubmit = (values) => {
     return this.props.updateCar({
       variables: {
         car: {
           id: this.props.carId,
-          make: values.make,
-          model: values.model,
-          trim: values.trim
+          ...values
         },
       }
     }).then(({ data }) => {
