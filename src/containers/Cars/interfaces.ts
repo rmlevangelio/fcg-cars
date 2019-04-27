@@ -1,3 +1,5 @@
+import { ITask } from "../../components/Task/List/interfaces";
+
 enum EngineType {
   VEE,
   INLINE,
@@ -50,6 +52,8 @@ export interface ICar {
 
 export interface ICars {
   car: ICar;
+  tasks: ITask[];
+  makeOptions: any[];
   refetch: () => void;
-  isLoading: boolean;
+  loading: boolean;
 }

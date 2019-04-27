@@ -2,6 +2,7 @@ import { InjectedFormProps } from 'redux-form';
 
 export interface ICarDetailsPublicProps {
   carId: string;
+  makeOptions: any[];
   refetch: () => void;
 }
 

@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Field, reduxForm } from 'redux-form';
 
-import { FETCH_MODEL_OPTIONS, FETCH_MAKE_OPTIONS, FETCH_TRIM_OPTIONS } from '../queries';
+import { FETCH_MODEL_OPTIONS, FETCH_TRIM_OPTIONS } from '../queries';
 import { UPDATE_CAR } from '../mutations';
 import { CarDetailsFormPropsWithForm } from './interfaces';
 import { PHYSICAL_STATUS, SELLING_STATUS, LEGAL_STATUS, ENGINE_TYPE } from '../enums';
@@ -17,7 +17,7 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
   }
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, makeOptions } = this.props;
     const { make, model, trim } = this.state;
     const isSubmitDisabled = (make.length === 0 || model.length === 0 || trim.length === 0);
 
@@ -74,31 +74,19 @@ class CarDetailsForm extends React.PureComponent<CarDetailsFormPropsWithForm> {
 
         <Form.Group>
           <Form.Label>Make:</Form.Label>
-          <Query query={FETCH_MAKE_OPTIONS}>
-            {
-              ({ data, loading }) => {
-                if (loading) {
-                  return <div>Loading car makers..</div>;
-                }
-
-                return (
-                  <Field
-                    name='make'
-                    component='select'
-                    className='form-control'
-                    onChange={this.handleMakeChange}
-                  >
-                    <option value=''>Please select maker</option>
-                    { 
-                      data.make.map((value: any) => (
-                        <option key={value} value={value}>{ value }</option>
-                      ))
-                    }
-                  </Field>
-                );
-              }
+          <Field
+            name='make'
+            component='select'
+            className='form-control'
+            onChange={this.handleMakeChange}
+          >
+            <option value=''>Please select maker</option>
+            { 
+              makeOptions.map((value: any) => (
+                <option key={value} value={value}>{ value }</option>
+              ))
             }
-          </Query>
+          </Field>
         </Form.Group>
         
         {

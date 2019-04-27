@@ -2,7 +2,6 @@ import { ITask } from '../components/Task/List/interfaces';
 
 export interface IPublicProps {
   tasks: ITask[];
-  makeOptions: String[];
   car: any;
 }
 

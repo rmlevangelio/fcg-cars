@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import { graphql, compose } from 'react-apollo';
 
 import { CREATE_TASK } from '../../../containers/Cars/mutations';
+import { FETCH_TASKS } from '../../../containers/Cars/queries';
 import { AddTaskPropsWithForm } from './interfaces';
 
 class AddTaskModal extends React.PureComponent<AddTaskPropsWithForm> {
@@ -66,7 +67,30 @@ class AddTaskModal extends React.PureComponent<AddTaskPropsWithForm> {
   }
 }
 
+const mapQueriesToVariables = (props) => {
+  const variables = {
+    carId: props.carId,
+  }
+
+  return {
+    variables
+  };
+}
+
+const mapQueriesToProps = (props) => {
+  const data = props!.data!
+  const { refetch } = data;
+
+  return {
+    refetch,
+  }
+}
+
 export default compose(
+  graphql(FETCH_TASKS, {
+    options: mapQueriesToVariables,
+    props: mapQueriesToProps
+  }),
   graphql(CREATE_TASK, { name: 'createTask' }),
   reduxForm({
     form: 'addTaskForm'

@@ -1,9 +1,6 @@
-import { DataProps, OperationVariables } from 'react-apollo';
-
-export interface ITaskList extends DataProps<{}, {}> {
-  carId: string;
+export interface ITaskList {
   tasks: ITask[];
-  loading: boolean;
+  showModal: () => void;
   refetch: () => void;
   updateTask: (v) => Promise<any>;
 }
